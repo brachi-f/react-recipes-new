@@ -18,7 +18,7 @@ const Header = () => {
                     active={activeItem === "רשימת המתכונים"}
                     onClick={({ name }) => {
                         setActive(name);
-                        navigate("/");
+                        navigate("/recipe");
                     }}>
                 </MenuItem>
                 <MenuItem
@@ -29,14 +29,14 @@ const Header = () => {
                         navigate("/");
                     }}>
                 </MenuItem>
-                <MenuItem
+                {/* <MenuItem
                     name="הוספת קטגוריה"
                     active={activeItem === "הוספת קטגוריה"}
                     onClick={({ name }) => {
                         setActive(name);
                         navigate('/category');
                     }}>
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem
                     name="רשימת הקניות"
                     active={activeItem === "רשימת הקניות"}

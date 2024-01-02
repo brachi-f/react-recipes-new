@@ -1,21 +1,22 @@
 
-//reducer.js
-
-import axios from 'axios';
 import * as actionsName from './action';
 const intialState = {
-    recipies: [],
+    recipes: [],
     categories: [],
     selectedRecipe: null,
     user: null,
-    shoppingList: []
+    shoppingList: [],
+    difficulties: []
 }
 const reducer = (state = intialState, action) => {
     switch (action.type) {
         case actionsName.SET_CATEGORIES:
             {
-                let categories = actionsName.getCategories()
-                return { ...state, categories };
+                return { ...state, categories: action.data };
+            }
+        case actionsName.SET_RECIPES:
+            {
+                return { ...state, recipes: action.data };
             }
         case actionsName.ADD_RECIPE:
             {
@@ -23,7 +24,9 @@ const reducer = (state = intialState, action) => {
             }
         case actionsName.ADD_CATEGORY:
             {
-                return { ...state }
+                let cat = intialState.categories;
+                cat.push(action.data);
+                return { ...state, categories: cat }
             }
         case actionsName.ADD_PRODUCT:
             {
@@ -51,20 +54,7 @@ const reducer = (state = intialState, action) => {
             }
         default:
             {
-                // let recipies = [];
-                // let categories = [];
-
-                // axios.get(`http://localhost:8080/api/recipe`)
-                //     .then(res => recipies = res.data)
-                //     .catch(err => alert(err.response.data));
-
-                // axios.get(`http://localhost:8080/api/category`)
-                //     .then(res => categories = res.data)
-                //     .catch(err => alert(err.response.data));
-
-                // return { ...state, recipies, categories };
-                return {...state}
-
+                return { ...state, difficulties: [{ Id: 1, Name: 'קל' }, { Id: 2, Name: 'בינוני' }, { Id: 3, Name: 'קשה' }] }
             }
     }
 }

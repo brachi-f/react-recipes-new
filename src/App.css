@@ -1,12 +1,15 @@
 .App {
   text-align: center;
 }
-*{
+
+* {
   direction: rtl;
 }
-.my-segment{
+
+.my-segment {
   width: 50%;
 }
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -37,7 +40,22 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.recipe-img {
+  height: 50px;
+}
+img {
+  overflow: hidden;
+  height: 150px !important;
+}
+.ui.cards>.card {
+  width: 300px !important;
+}
+.filters{
+  margin-bottom: 25px;
 }
