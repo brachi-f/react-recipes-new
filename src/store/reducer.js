@@ -1,3 +1,6 @@
+
+//reducer.js
+
 import axios from 'axios';
 import * as actionsName from './action';
 const intialState = {
@@ -9,6 +12,11 @@ const intialState = {
 }
 const reducer = (state = intialState, action) => {
     switch (action.type) {
+        case actionsName.SET_CATEGORIES:
+            {
+                let categories = actionsName.getCategories()
+                return { ...state, categories };
+            }
         case actionsName.ADD_RECIPE:
             {
                 return { ...state }
@@ -35,26 +43,31 @@ const reducer = (state = intialState, action) => {
             }
         case actionsName.UPDATE_PRODUCT:
             {
-                return { ...state, user: action.user }
+                return { ...state }
             }
         case actionsName.UPDATE_RECIPE:
             {
-                return { ...state, user: action.user }
+                return { ...state }
             }
         default:
             {
                 // let recipies = [];
                 // let categories = [];
+
                 // axios.get(`http://localhost:8080/api/recipe`)
-                // .then(x=> recipies = x.data)
-                // .catch(e=>console.log(e.response?.data));
+                //     .then(res => recipies = res.data)
+                //     .catch(err => alert(err.response.data));
+
                 // axios.get(`http://localhost:8080/api/category`)
-                // .then(x=> categories = x.data)
-                // .catch(e=>console.log(e.response?.data));
-                // return { ...state ,  recipies, categories}
-                return { ...state }
+                //     .then(res => categories = res.data)
+                //     .catch(err => alert(err.response.data));
+
+                // return { ...state, recipies, categories };
+                return {...state}
 
             }
     }
 }
 export default reducer;
+
+

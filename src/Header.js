@@ -34,7 +34,7 @@ const Header = () => {
                     active={activeItem === "הוספת קטגוריה"}
                     onClick={({ name }) => {
                         setActive(name);
-                        navigate('/');
+                        navigate('/category');
                     }}>
                 </MenuItem>
                 <MenuItem
@@ -46,14 +46,14 @@ const Header = () => {
                     }}>
                 </MenuItem>
             </MenuMenu>
-            <MenuItem>
+            <MenuItem
                 name='התנתקות'
                 active={activeItem === 'התנתקות'}
                 onClick={({ name }) => {
                     setActive(name);
                     dispatch({ type: actionsName.SET_USER.toString(), user: null })
                 }}
-            </MenuItem>
+            />
         </Menu> :
             <Menu >
                 <MenuMenu position='right'>
