@@ -26,7 +26,7 @@ const Header = () => {
                     active={activeItem === "הוספת מתכון"}
                     onClick={({ name }) => {
                         setActive(name);
-                        navigate("/");
+                        navigate("/edit");
                     }}>
                 </MenuItem>
                 {/* <MenuItem
@@ -42,7 +42,7 @@ const Header = () => {
                     active={activeItem === "רשימת הקניות"}
                     onClick={({ name }) => {
                         setActive(name);
-                        navigate('/');
+                        navigate('/buy');
                     }}>
                 </MenuItem>
             </MenuMenu>
@@ -52,6 +52,7 @@ const Header = () => {
                 onClick={({ name }) => {
                     setActive(name);
                     dispatch({ type: actionsName.SET_USER.toString(), user: null })
+                    navigate('/');
                 }}
             />
         </Menu> :

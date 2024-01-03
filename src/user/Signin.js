@@ -29,15 +29,12 @@ const Signin = () => {
             resolver: yupResolver(schema),
         })
     const onSubmit = (data) => {
-        console.log(data);
         axios.post(`http://localhost:8080/api/user/sighin`, { Username:data.UserName, Password:data.Password, Name: data.Name, Phone: data.Phone, Email: data.Email, Tz: data.Tz })
             .then((res) => {
-                dispatch({ type: actions.SET_USER, user: res.data });
-                console.log(res.data);
+                dispatch({ type: actions.SET_USER, user: res?.data });
                 navigate('/home');
             })
             .catch((res) => {
-                console.log(res.request.response);
                 alert(res.request.response);
             });
     }

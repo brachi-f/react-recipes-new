@@ -1,4 +1,4 @@
-
+import axios from 'axios';
 import * as actionsName from './action';
 const intialState = {
     recipes: [],
@@ -20,37 +20,53 @@ const reducer = (state = intialState, action) => {
             }
         case actionsName.ADD_RECIPE:
             {
-                return { ...state }
+                const recipes = intialState.recipes;
+                recipes.push(action.data)
+                return { ...state, recipes }
             }
-        case actionsName.ADD_CATEGORY:
-            {
-                let cat = intialState.categories;
-                cat.push(action.data);
-                return { ...state, categories: cat }
-            }
+        
         case actionsName.ADD_PRODUCT:
             {
-                return { ...state }
+                let shoppingList = intialState.shoppingList;
+                shoppingList.push(action.data)
+                return { ...state, shoppingList }
             }
         case actionsName.DELETE_PRODUCT:
             {
                 return { ...state }
             }
-        case actionsName.DELET_ERECIPE:
+        case actionsName.DELETE_ERECIPE:
             {
                 return { ...state }
             }
         case actionsName.SET_USER:
             {
-                return { ...state, user: action.user }
+                let shoppingList = [];
+                if (action.user)
+                    axios.get(`http://localhost:8080/api/bay/${action.user.Id}`)
+                        .then(res => shoppingList = res.data)
+                        .catch(err => {
+                            alert(err.response.data)
+                        });
+                return { ...state, user: action.user, shoppingList }
             }
-        case actionsName.UPDATE_PRODUCT:
+        case actionsName.SET_PRODUCTS://אולי אפשר למחוק
             {
-                return { ...state }
+                let shoppingList=[];
+                axios.get(`http://localhost:8080/api/bay/${action.userId}`)
+                        .then(res => shoppingList = res.data)
+                        .catch(err => {
+                            alert(err.response.data)
+                        });
+                return { ...state, shoppingList }
             }
         case actionsName.UPDATE_RECIPE:
             {
                 return { ...state }
+            }
+        case actionsName.SET_SELECTED_RECIPE:
+            {
+                return { ...state, selectedRecipe: action.data }
             }
         default:
             {

@@ -12,34 +12,37 @@ import React, { Component } from 'react'
 import { ModalContent, ModalActions, Button, Header, Icon, Modal, Form, FormField, Message, Input } from 'semantic-ui-react'
 import { InputRef } from "../user/Login";
 import axios from "axios";
+
+
 const Categories = () => {
     const dispatch = useDispatch();
     const categories = useSelector(state => state.categories);
-    const schema = yup.object().shape({
+    const nameSchema = yup.object().shape({
         Name: yup.string().required('לא הוכנס שם קטגוריה'),
     }).required();
-    const { register, handleSubmit, formState: { errors }, } = useForm({ resolver: yupResolver(schema), });
+    const { register, handleSubmit, formState: { errors }, } = useForm({ resolver: yupResolver(nameSchema), });
     const [open, setOpen] = useState(false);
     const [err, setErr] = useState(false);
     const [errData, setErrData] = useState("");
     const onSubmit = (data) => {
         axios.post(`http://localhost:8080/api/category`, { Name: data.Name })
             .then(c => {
-                dispatch({ type: actionsName.ADD_CATEGORY, data: c });
+                dispatch({ type: actionsName.SET_CATEGORIES, data: c.data });
                 setOpen(false);
             }).catch(err => {
-                setErrData(err.response.data)
+                setErrData(err.response?.data)
                 setErr(true);
             })
     }
 
     return <>
         <Modal
-            closeIcon
+            // closeIcon
             open={open}
-            trigger={<Button>הוספת קטגוריה</Button>}
+            trigger={<Button >הוספת קטגוריה</Button>}
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
+            size="small"
         >
             <Header content='הוספת קטגוריה' />
             <ModalContent>

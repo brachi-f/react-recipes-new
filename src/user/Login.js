@@ -27,12 +27,12 @@
 //         console.log(data);
 //         axios.post(`http://localhost:8080/api/user/login`, { UserName: data.UserName, Password: data.Password })
 //             .then(res => {
-//                 dispatch({ type: actions.SET_USER, user: res.data })
-//                 console.log(res.data);
+//                 dispatch({ type: actions.SET_USER, user: res?.data })
+//                 console.log(res?.data);
 //                 navigate('/home');
 //             })
 //             .catch(res => {
-//                 alert(res.response.data)
+//                 alert(res.response?.data)
 //             })
 //     }
 //     return <>
@@ -124,17 +124,13 @@ const Login = () => {
     });
 
     const onSubmit = (data) => {
-        console.log(data);
         let body = { Username: data.UserName, Password: data.Password }
-        console.log("body:  ",body);
         axios.post(`http://localhost:8080/api/user/login`,body )
             .then((res) => {
-                dispatch({ type: actions.SET_USER, user: res.data });
-                console.log(res.data);
+                dispatch({ type: actions.SET_USER, user: res?.data });
                 navigate('/home');
             })
             .catch(res => {
-                console.log(res.request.response);
                 alert(res.request.response);
             });
     };

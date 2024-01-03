@@ -1,8 +1,12 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, ButtonContent, Card, CardContent, CardDescription, CardHeader, Icon, Image } from "semantic-ui-react";
-
+import * as actionNames from '../store/action'
+import AllRecipe from "./AllRecipe";
+import { useNavigate } from "react-router-dom";
 
 const ItemRecipe = ({ recipe }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const user = useSelector(state => state.user);
     const categoryList = useSelector(state => state.categories);
     const difficultyList = useSelector(state => state.difficulties);
@@ -27,7 +31,10 @@ const ItemRecipe = ({ recipe }) => {
                     <Icon name='clock' />
                     {" " + recipe.Duration + " דקות "}
                 </span>
-                <Button animated>
+                <Button animated onClick={()=>{
+                    dispatch({type: actionNames.SET_SELECTED_RECIPE, data: recipe});
+                    navigate(`/show`);
+                }}>
                     <ButtonContent visible>הצג</ButtonContent>
                     <ButtonContent hidden>
                         <Icon name='arrow left' />

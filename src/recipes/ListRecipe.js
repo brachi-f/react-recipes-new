@@ -1,11 +1,23 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { CardGroup, Input, Select } from "semantic-ui-react";
 import ItemRecipe from './ItemRecipe'
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { CardGroup, Input, Select } from "semantic-ui-react";
+import * as actionName from '../store/action'
+import axios from 'axios';
 
-const Recipes = () => {
-
-    const recipes = useSelector(state => state.recipes);
+const ListRecipes = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({ type: actionName.SET_SELECTED_RECIPE, data: null });
+        axios.get(`http://localhost:8080/api/recipe`)
+            .then(res => {
+                dispatch({ type: actionName.SET_RECIPES, data: res.data })
+            })
+            .catch(err => {
+                alert(err.response?.data);
+            });
+    }, [])
+    const recipes = useSelector(state => state.recipes)
     const [categoty, setCategoty] = useState(null);
     const [duration, setDuration] = useState(null);
     const [userId, setUserId] = useState(null);
@@ -52,4 +64,4 @@ const Recipes = () => {
 
     </>
 }
-export default Recipes;
+export default ListRecipes;
