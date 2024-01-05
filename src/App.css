@@ -57,7 +57,9 @@
   width: 300px !important;
 }
 .filters{
-  margin-bottom: 25px;
+  margin-bottom: 25px !important;
+  margin-top: 25px !important;
+  width: 100vw !important;
 }
 .card-recipe{
   width: 90vw !important;

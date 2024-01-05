@@ -11,7 +11,43 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.filters{
+
+.filters {
   display: flex;
-    justify-content: space-evenly;
+  justify-content: space-evenly;
+}
+
+body {
+  /* background-image: url(https://img.freepik.com/premium-photo/table-full-different-desserts-including-muffins-other-pastries_777078-11641.jpg?w=826) !important; */
+  /* background-size: cover !important; */
+  /* background-color: black !important; */
+}
+
+.ui.cards {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.placeholder {
+  opacity: .8 !important;
+}
+
+.field {
+  max-width: inherit !important;
+}
+
+/* input{
+  border-color: #e72e46 !important;
+} */
+.header-img {
+  width: 100vw;
+  height: 30vh;
+  overflow: hidden !important;
+  bottom: 50%;
+}
+
+
+.header-img img {
+  width: 100vw;
+
 }

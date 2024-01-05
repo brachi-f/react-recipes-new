@@ -11,11 +11,11 @@ const ItemRecipe = ({ recipe }) => {
     const categoryList = useSelector(state => state.categories);
     const difficultyList = useSelector(state => state.difficulties);
     return <>
-        <Card>
+        <Card color="yellow">
 
             <Image wrapped src={recipe.Img} size="medium" className="recipe-img"/>
             <CardContent>
-                <CardHeader>{recipe.Name}{user?.Id == recipe.UserId ? <Icon name="user" floated="left" /> : <></>}</CardHeader>
+                <CardHeader >{recipe.Name}{user?.Id == recipe.UserId ? <Icon name="user" floated="left" /> : <></>}</CardHeader>
                 <CardDescription>{recipe.Description}</CardDescription>
             </CardContent>
             <CardContent extra>
@@ -34,7 +34,7 @@ const ItemRecipe = ({ recipe }) => {
                 <Button animated onClick={()=>{
                     dispatch({type: actionNames.SET_SELECTED_RECIPE, data: recipe});
                     navigate(`/show`);
-                }}>
+                }} color="yellow">
                     <ButtonContent visible>הצג</ButtonContent>
                     <ButtonContent hidden>
                         <Icon name='arrow left' />

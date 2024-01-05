@@ -13,7 +13,7 @@ const ShoppingList = () => {
     const [Ok, setOk] = useState(false);
     const [itemToDelte, setItem] = useState();
     const deleteItem = () => {
-        axios.post(`http://localhost:8080/api/bay/${user.Id}/${itemToDelte.Id}`, itemToDelte.Id)
+        axios.post(`http://localhost:8080/api/bay/${user.Id}/${itemToDelte.Id}`, {Id: itemToDelte.Id, UserId: user.Id})
             .then(res => {
                 dispatch({ type: actionName.SET_PRODUCTS, userId: user.Id })
                 setItem(null)

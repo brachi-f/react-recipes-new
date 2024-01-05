@@ -1,15 +1,14 @@
 
 //categories.js
-import { useForm, useFieldArray } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../store/reducer";
 import { useEffect } from "react";
 import * as actionsName from '../store/action';
 import { useState } from "react";
-import React, { Component } from 'react'
-import { ModalContent, ModalActions, Button, Header, Icon, Modal, Form, FormField, Message, Input } from 'semantic-ui-react'
+import React from 'react'
+import { ModalContent, ModalActions, Button, Header, Icon, Modal, Form, FormField, Message } from 'semantic-ui-react'
 import { InputRef } from "../user/Login";
 import axios from "axios";
 
@@ -34,12 +33,20 @@ const Categories = () => {
                 setErr(true);
             })
     }
-
+    useEffect(() => {
+        axios.get(`http://localhost:8080/api/category`)
+            .then(res => {
+                dispatch({ type: actionsName.SET_CATEGORIES, data: res?.data })
+            })
+            .catch(err => {
+                alert(err.response?.data);
+            });
+    }, [open])
     return <>
         <Modal
             // closeIcon
             open={open}
-            trigger={<Button >הוספת קטגוריה</Button>}
+            trigger={<Button color='yellow' >הוספת קטגוריה</Button>}
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             size="small"

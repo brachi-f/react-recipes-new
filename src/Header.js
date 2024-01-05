@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Menu, MenuItem, MenuMenu } from "semantic-ui-react";
+import { Menu, MenuItem, MenuMenu, Segment } from "semantic-ui-react";
 import * as actionsName from './store/action';
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user)
     return <>
-        {user ? <Menu secondary>
+        {user ? <> <Menu inverted color="yellow" stackable>
             <MenuMenu position="left">
                 <MenuItem
                     name="רשימת המתכונים"
@@ -47,6 +47,7 @@ const Header = () => {
                 </MenuItem>
             </MenuMenu>
             <MenuItem
+            
                 name='התנתקות'
                 active={activeItem === 'התנתקות'}
                 onClick={({ name }) => {
@@ -55,8 +56,10 @@ const Header = () => {
                     navigate('/');
                 }}
             />
-        </Menu> :
-            <Menu >
+        </Menu>
+            <Segment inverted color="yellow" textAlign="center" content={"Hello " + user.Name}></Segment>
+        </> :
+            <Menu inverted stackable>
                 <MenuMenu position='right'>
                     <MenuItem
                         name="התחברות"
