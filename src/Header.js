@@ -11,7 +11,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user)
     return <>
-        {user ? <> <Menu inverted color="yellow" stackable>
+        {user ? <> <Menu inverted /*color="yellow"*/ stackable>
             <MenuMenu position="left">
                 <MenuItem
                     name="רשימת המתכונים"
@@ -57,7 +57,7 @@ const Header = () => {
                 }}
             />
         </Menu>
-            <Segment inverted color="yellow" textAlign="center" content={"Hello " + user.Name}></Segment>
+            <Segment inverted /*color="yellow"*/ textAlign="center" content={"Hello " + user.Name}></Segment>
         </> :
             <Menu inverted stackable>
                 <MenuMenu position='right'>

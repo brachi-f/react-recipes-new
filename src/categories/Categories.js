@@ -26,7 +26,7 @@ const Categories = () => {
     const onSubmit = (data) => {
         axios.post(`http://localhost:8080/api/category`, { Name: data.Name })
             .then(c => {
-                dispatch({ type: actionsName.SET_CATEGORIES, data: c.data });
+                dispatch({ type: actionsName.ADD_CATEGORY, data: c.data });
                 setOpen(false);
             }).catch(err => {
                 setErrData(err.response?.data)
@@ -39,6 +39,8 @@ const Categories = () => {
                 dispatch({ type: actionsName.SET_CATEGORIES, data: res?.data })
             })
             .catch(err => {
+               
+                
                 alert(err.response?.data);
             });
     }, [open])
@@ -46,7 +48,7 @@ const Categories = () => {
         <Modal
             // closeIcon
             open={open}
-            trigger={<Button color='yellow' >הוספת קטגוריה</Button>}
+            trigger={<Button /*color="yellow"*/ >הוספת קטגוריה</Button>}
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             size="small"

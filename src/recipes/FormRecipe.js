@@ -91,7 +91,7 @@ const FormRecipe = () => {
     }
     return <>
         <div className="container">
-            <Segment placeholder color='yellow'>
+            <Segment placeholder /*color="yellow"*/>
                 <Form onSubmit={handleSubmit(onSubmit)} widths="equal">
                     <Form.Field >
                         <label>שם מתכון</label>
@@ -170,11 +170,11 @@ const FormRecipe = () => {
                                 <p>{errors[`Ingrident.${index}.Type`]?.message}</p>
                             </Form.Field>
                             <Button icon size='large' floated="left" onClick={() => IngridentRemove(index)}>
-                                <Icon color='yellow' name='trash alternate' />
+                                <Icon /*color="yellow"*/ name='trash alternate' />
                             </Button>
                         </FormGroup>
                     )}
-                    <Button color='yellow' onClick={() => IngridentAppend({ Name: null, Count: null, Type: null })}>
+                    <Button /*color="yellow"*/ onClick={() => IngridentAppend({ Name: null, Count: null, Type: null })}>
                         <Icon name="plus" style={{ margin: 10 }} /> הוסף מוצר</Button>
                     <h4>הוראות הכנה</h4>
                     {InstructionsFields?.map((instruction, index) =>
@@ -189,14 +189,14 @@ const FormRecipe = () => {
                             </Form.Field>
 
                             <Button icon size='large' floated="left" onClick={() => InstructionsRemove(index)}>
-                                <Icon color='yellow' name='trash alternate' />
+                                <Icon /*color="yellow"*/ name='trash alternate' />
                             </Button>
                         </FormGroup>
                     )}
-                    <Button color='yellow' onClick={() => InstructionsAppend(null)}>
+                    <Button /*color="yellow"*/ onClick={() => InstructionsAppend(null)}>
                         <Icon  name="plus" style={{ margin: 10 }} /> הוסף הוראה</Button>
                     <br />
-                    <Button size="medium" type='submit' color="yellow" floated="left" >
+                    <Button size="medium" type='submit' /*color="yellow"*/ floated="left" >
                         <Icon name='save' style={{ margin: 10 }} />שמירה
                     </Button>
                 </Form>

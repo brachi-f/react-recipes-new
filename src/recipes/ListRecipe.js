@@ -29,9 +29,7 @@ const ListRecipes = () => {
             <Image
                 src="https://img.freepik.com/premium-photo/set-chocolate-candies-background-sweet-dessert-praline_84485-606.jpg?size=626&ext=jpg&uid=R47685137&ga=GA1.1.745492481.1699734055&semt=ais" />
         </div>
-        {/* <div className="row"> */}
-        <Segment color='yellow' inverted className='filters col'>
-            {/* <div className="filters col"> */}
+        <Segment /*color="yellow"*/ inverted className='filters col'>
             <Select placeholder='קטגוריה' icon='list' iconposition='left' onChange={(e, { value }) => {
                 setCategoty(value);
             }} options={

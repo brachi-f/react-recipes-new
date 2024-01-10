@@ -33,7 +33,7 @@ const ShoppingList = () => {
                     {list.map((p) =>
                         <TableRow key={p.Id}>
                             <TableCell>{p.Count}</TableCell>
-                            <TableCell>{p.Name}</TableCell>
+                            <TableCell>{p.Name}</TableCell> 
                             <TableCell>
                                 <Button icon onClick={() => {
                                     setOk(false)

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import * as actionsName from './action';
+import { act } from 'react-dom/test-utils';
+import { getProducts } from '../services/shoppingList';
 const intialState = {
     recipes: [],
     categories: [],
@@ -24,11 +26,15 @@ const reducer = (state = intialState, action) => {
                 recipes.push(action.data)
                 return { ...state, recipes }
             }
-        
+
         case actionsName.ADD_PRODUCT:
             {
                 let shoppingList = intialState.shoppingList;
-                shoppingList.push(action.data)
+                let i = shoppingList.findIndex(p => p.Name == action.data.Name)
+                if (i >= 0)
+                    shoppingList[i].Count *= 2;
+                else
+                    shoppingList.push(action.data)
                 return { ...state, shoppingList }
             }
         case actionsName.DELETE_PRODUCT:
@@ -43,21 +49,22 @@ const reducer = (state = intialState, action) => {
             {
                 let shoppingList = [];
                 if (action.user)
-                    axios.get(`http://localhost:8080/api/bay/${action.user.Id}`)
-                        .then(res => shoppingList = res.data)
-                        .catch(err => {
-                            alert(err.response.data)
-                        });
+                    shoppingList = getProducts(action.user.Id);
+                // axios.get(`http://localhost:8080/api/bay/${action.user.Id}`)
+                //     .then(res => shoppingList = res.data)
+                //     .catch(err => {
+                //         alert(err.response.data)
+                //     });
                 return { ...state, user: action.user, shoppingList }
             }
         case actionsName.SET_PRODUCTS://אולי אפשר למחוק
             {
-                let shoppingList=[];
+                let shoppingList = [];
                 axios.get(`http://localhost:8080/api/bay/${action.userId}`)
-                        .then(res => shoppingList = res.data)
-                        .catch(err => {
-                            alert(err.response.data)
-                        });
+                    .then(res => shoppingList = res.data)
+                    .catch(err => {
+                        alert(err.response.data)
+                    });
                 return { ...state, shoppingList }
             }
         case actionsName.UPDATE_RECIPE:
