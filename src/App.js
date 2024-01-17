@@ -11,6 +11,7 @@ import ListRecipes from './recipes/ListRecipe';
 import AllRecipe from './recipes/AllRecipe';
 import FormRecipe from './recipes/FormRecipe';
 import ShoppingList from './shopping/ShoppingList';
+import { getProducts, getProductsDispatch } from './services/shoppingList';
 
 function App() {
   const user = useSelector(state => state.user);
@@ -23,9 +24,14 @@ function App() {
       .catch(err => {
         alert(err.response?.data);
       });
-    
+
 
   }, [])
+  useEffect(() => {
+    if (user)
+      dispatch(getProductsDispatch(user.Id));
+  }, [user]);
+
   return (<>
     <Routes>
       <Route path='/' element={<Home />} />

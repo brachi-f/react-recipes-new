@@ -30,42 +30,34 @@ const reducer = (state = intialState, action) => {
         case actionsName.ADD_PRODUCT:
             {
                 let shoppingList = intialState.shoppingList;
-                let i = shoppingList.findIndex(p => p.Name == action.data.Name)
-                if (i >= 0)
-                    shoppingList[i].Count *= 2;
-                else
-                    shoppingList.push(action.data)
+                shoppingList.push(action.data)
+                return { ...state, shoppingList }
+            }
+        case actionsName.UPDATE_PRODUCT:
+            {
+                let shoppingList = intialState.shoppingList;
+                shoppingList[action.index] = action.data;
                 return { ...state, shoppingList }
             }
         case actionsName.DELETE_PRODUCT:
             {
-                return { ...state }
+                let shoppingList = intialState.shoppingList;
+                shoppingList = shoppingList.filter(s=>s.Id!=action.id);
+                console.log("reducer delete product after delete: ",shoppingList)
+                return { ...state, shoppingList }
             }
-        case actionsName.DELETE_ERECIPE:
+        case actionsName.DELETE_RECIPE:
             {
-                return { ...state }
+                let recipes = intialState.recipes.filter(r => r != action.data);
+                return { ...state, recipes }
             }
         case actionsName.SET_USER:
             {
-                let shoppingList = [];
-                if (action.user)
-                    shoppingList = getProducts(action.user.Id);
-                // axios.get(`http://localhost:8080/api/bay/${action.user.Id}`)
-                //     .then(res => shoppingList = res.data)
-                //     .catch(err => {
-                //         alert(err.response.data)
-                //     });
-                return { ...state, user: action.user, shoppingList }
+                return { ...state, user: action.user }
             }
-        case actionsName.SET_PRODUCTS://אולי אפשר למחוק
+        case actionsName.SET_PRODUCTS:
             {
-                let shoppingList = [];
-                axios.get(`http://localhost:8080/api/bay/${action.userId}`)
-                    .then(res => shoppingList = res.data)
-                    .catch(err => {
-                        alert(err.response.data)
-                    });
-                return { ...state, shoppingList }
+                return { ...state, shoppingList: action.data }
             }
         case actionsName.UPDATE_RECIPE:
             {

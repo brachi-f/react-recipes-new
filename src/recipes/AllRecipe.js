@@ -8,16 +8,32 @@ import { useNavigate } from "react-router-dom";
 const Ingredient = ({ Name, Count, Type }) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user)
+    let shoppingList = useSelector(state => state.shoppingList);
     return <>
         <Segment /*color="yellow"*/>
             <SegmentInline>
                 <Button animated='vertical' icon onClick={() => {
-                    let name = "" + Type + " " +Name;
-                    axios.post(`http://localhost:8080/api/bay`, { Name: name, Count: Count, UserId: user.Id })
-                        .then(res => dispatch({ type: actionName.ADD_PRODUCT, data: res?.data }))
-                        .catch(err => console.log(err.response))
-
-                    //message
+                    //let name = "" + Type + " " + Name;
+                    let i = shoppingList.findIndex(p => p.Name === Name);
+                    console.log("index of product = ", i);
+                    axios.post(`http://localhost:8080/api/bay`, { Name: Name, Count: 1, UserId: user.Id })
+                        .then(res => {
+                            i < 0 ?
+                                dispatch({ type: actionName.ADD_PRODUCT, data: res.data }) :
+                                dispatch({ type: actionName.UPDATE_PRODUCT, data: res.data, index: i })
+                        })
+                        .catch(err => console.log("add product error: ", err.response));
+                    /*if (i >= 0)
+                        axios.post(`http://localhost:8080/api/bay/edit`, {
+                            Id: shoppingList[i].Id,
+                            Name: shoppingList[i].Name,
+                            Count: shoppingList[i].Count + 1,
+                            UserId: user.Id
+                        }).then(res => dispatch({ type: actionName.UPDATE_PRODUCT, data: res.data, index: i }));
+                    else
+                        axios.post(`http://localhost:8080/api/bay`, { Name: Name, Count: 1, UserId: user.Id })
+                            .then(res => dispatch({ type: actionName.ADD_PRODUCT, data: res.data }))
+                            .catch(err => console.log("add product error: ",err.response));*/
                 }}>
                     <ButtonContent visible>
                         <Icon name="plus" />
@@ -68,18 +84,17 @@ const AllRecipe = () => {
                     </SegmentGroup>
                     <Header /*color="yellow"*/>הוראות הכנה</Header>
                     <SegmentGroup>
-                        {console.log(recipe.Instructions)}
                         {recipe.Instructions?.map((i, index) =>
                             <Segment /*color="yellow"*/ key={index}>
                                 <Icon name="circle" size="tiny" style={{ margin: 15 }} />
-                                {i.Instruc?i.Instruc:i}
+                                {i.Instruc ? i.Instruc : i}
                             </Segment>)}
                     </SegmentGroup>
                 </CardContent>
                 {user.Id === recipe.UserId ?
                     <CardFooter>
                         <Button /*color="yellow"*/ icon size='large' floated="left" onClick={() => {
-                            dispatch({ type: actionName.DELETE_ERECIPE, recipeId: recipe.Id })
+                            dispatch({ type: actionName.DELETE_RECIPE, recipeId: recipe.Id })
                             navigate('/recipe')
                         }}>
                             <Icon name='trash alternate' />

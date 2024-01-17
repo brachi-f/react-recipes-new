@@ -181,9 +181,6 @@ const FormRecipe = () => {
                         <FormGroup key={index}>
                             <Form.Field>
                                 <label>הוראה</label>
-                                {console.log("instruction ",instruction.toString())}
-                                {console.log("instruction.Instruc : ",instruction.Instruc)}
-                                {/* <InputRef {...register(`Instructions.${index}.Instruc`)} defaultValue={instruction?.Instruc} placeholder="הוראת הכנה" /> */}
                                 <InputRef {...register(`Instructions.${index}`)} defaultValue={instruction} placeholder="הוראת הכנה" />
                                 <p>{errors.Instructions?.message}</p>
                             </Form.Field>
