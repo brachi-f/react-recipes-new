@@ -34,7 +34,7 @@ const Login = () => {
         axios.post(`http://localhost:8080/api/user/login`,body )
             .then((res) => {
                 dispatch({ type: actions.SET_USER, user: res.data });
-                navigate('/');
+                navigate('/home');
             })
             .catch(res => {
                 alert(res.request.response);

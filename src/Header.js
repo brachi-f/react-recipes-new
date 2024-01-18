@@ -46,7 +46,7 @@ const Header = () => {
                 onClick={({ name }) => {
                     setActive(name);
                     dispatch({ type: actionsName.SET_USER.toString(), user: null })
-                    navigate('/');
+                    navigate('/home');
                 }}
             />
         </Menu>

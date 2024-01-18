@@ -12,9 +12,7 @@ import Categories from '../categories/Categories'
 
 const FormRecipe = () => {
     const dispatch = useDispatch();
-    // let recipe = useSelector(state => state.selectedRecipe);
     const [recipe, setRecipe] = useState(useSelector(state => state.selectedRecipe));
-    // if (!recipe) setRecipe(null);
     const categoryList = useSelector(state => state.categories);
     const difficultyList = useSelector(state => state.difficulties)
 
@@ -26,11 +24,6 @@ const FormRecipe = () => {
         Difficulty: yup.number().integer().positive().required().min(1, "חובה לבחור רמת קושי"),
         Description: yup.string().required("חובה להכניס תיאור"),
         Instructions: yup.array().of(yup.string().required()),
-        // Instructions: yup.array().of(
-        //     yup.object().shape({
-        //         Instruc: yup.string().required("חובה להכניס הוראה")
-        //     })
-        // ),
         Ingrident: yup.array().of(
             yup.object().shape({
                 Name: yup.string().required("הכנס שם"),
@@ -90,7 +83,7 @@ const FormRecipe = () => {
         navigate('/recipe');
     }
     return <>
-        {user === null ? navigate('/') : console.log(user)}
+        {user === null ? navigate('/home') : null}
         <div className="container">
             <Segment placeholder /*color="yellow"*/>
                 <Form onSubmit={handleSubmit(onSubmit)} widths="equal">
@@ -101,15 +94,6 @@ const FormRecipe = () => {
                     {errors.Name?.message ? <Message warning content={errors.Name.message} /> : <></>}
                     <Form.Field>
                         <label>קטגוריה</label>
-                        {/* to change */}
-                        {/* <Select
-                        {...register("CategoryId")}
-                        fluid
-                        placeholder='קטגוריה'
-                        value={recipe?.CategoryId}
-                        options={
-                            categoryList.map((c) => { return { key: c.Id, text: c.Name, value: c.Id } })
-                        } /> */}
                         <select {...register("CategoryId")} name="CategoryId" defaultValue={recipe ? recipe.CategoryId : 0}>
                             <option value={0} disabled>קטגוריה</option>
                             {categoryList?.map((category) =>
@@ -121,14 +105,6 @@ const FormRecipe = () => {
                     <Categories />
                     <Form.Field>
                         <label>רמת קושי</label>
-                        {/* <Select
-                        ref={register("Difficulty")}
-                        fluid
-                        placeholder='רמת קושי'
-                        value={recipe?.Difficulty}
-                        options={
-                            difficultyList.map((c) => { return { key: c.Id, value: c.Id, text: c.Name } })
-                        } /> */}
                         <select {...register("Difficulty")} name="Difficulty" defaultValue={recipe ? recipe.Difficulty : 0}>
                             <option value="0" disabled>רמת קושי</option>
                             {difficultyList.map((difficulty) => <>

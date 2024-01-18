@@ -68,13 +68,15 @@
   display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 .small.modal {
   height: 40vh;
   position: absolute;
   top: 30vh;
-  width: 60vw;
-  right: 15vw;
+  width: 60vw !important;
+  right: 15%;
+  text-align: right !important;
 }
 .icon{
   margin: 0px 8px !important;

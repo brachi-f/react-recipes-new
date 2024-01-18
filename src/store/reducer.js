@@ -3,7 +3,7 @@ import * as actionsName from './action';
 import { act } from 'react-dom/test-utils';
 import { getProducts } from '../services/shoppingList';
 const intialState = {
-    recipes: [], 
+    recipes: [],
     categories: [],
     selectedRecipe: null,
     user: null,
@@ -22,33 +22,35 @@ const reducer = (state = intialState, action) => {
             }
         case actionsName.ADD_RECIPE:
             {
-                const recipes = intialState.recipes;
+                const recipes = state.recipes;
                 recipes.push(action.data)
                 return { ...state, recipes }
             }
 
         case actionsName.ADD_PRODUCT:
             {
-                let shoppingList = intialState.shoppingList;
+                let shoppingList = state.shoppingList;
+                console.log("ADD_PRODUCT ",shoppingList)
                 shoppingList.push(action.data)
                 return { ...state, shoppingList }
             }
         case actionsName.UPDATE_PRODUCT:
             {
-                let shoppingList = intialState.shoppingList;
-                shoppingList[action.index] = action.data;
-                return { ...state, shoppingList }
+                let list = state.shoppingList;
+                list[action.index] = action.data;
+                list.filter(p=>p)
+                return { ...state, shoppingList: list }
             }
         case actionsName.DELETE_PRODUCT:
             {
-                let shoppingList = intialState.shoppingList;
-                shoppingList = shoppingList.filter(s=>s.Id!=action.id);
-                console.log("reducer delete product after delete: ",shoppingList)
-                return { ...state, shoppingList }
+                let list =[];
+                list = state.shoppingList;
+                list = list.filter(s => s.Id !== action.id);
+                return { ...state, shoppingList: list }
             }
         case actionsName.DELETE_RECIPE:
             {
-                let recipes = intialState.recipes.filter(r => r != action.data);
+                let recipes = state.recipes.filter(r => r != action.data);
                 return { ...state, recipes }
             }
         case actionsName.SET_USER:

@@ -29,7 +29,7 @@ const ListRecipes = () => {
     const difficultyList = useSelector(state => state.difficulties);
 
     return <>
-        {user === null ? navigate('/') : null}
+        {user === null ? navigate('/home') : null}
         <div className='header-img'>
             <Image
                 src="https://img.freepik.com/premium-photo/set-chocolate-candies-background-sweet-dessert-praline_84485-606.jpg?size=626&ext=jpg&uid=R47685137&ga=GA1.1.745492481.1699734055&semt=ais" />

@@ -11,6 +11,7 @@ import React from 'react'
 import { ModalContent, ModalActions, Button, Header, Icon, Modal, Form, FormField, Message } from 'semantic-ui-react'
 import { InputRef } from "../user/Login";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 const Categories = () => {
@@ -28,27 +29,21 @@ const Categories = () => {
             .then(c => {
                 dispatch({ type: actionsName.ADD_CATEGORY, data: c.data });
                 setOpen(false);
+                Swal.fire({
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: '1500'
+                })
             }).catch(err => {
                 setErrData(err.response?.data)
                 setErr(true);
             })
-    }
-    useEffect(() => {
-        axios.get(`http://localhost:8080/api/category`)
-            .then(res => {
-                dispatch({ type: actionsName.SET_CATEGORIES, data: res?.data })
-            })
-            .catch(err => {
-               
-                
-                alert(err.response?.data);
-            });
-    }, [open])
+    } 
+   
     return <>
         <Modal
-            // closeIcon
             open={open}
-            trigger={<Button /*color="yellow"*/ >הוספת קטגוריה</Button>}
+            trigger={<Button /*color="yellow"*/onClick={()=>setOpen(true)} >הוספת קטגוריה</Button>}
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             size="small"
