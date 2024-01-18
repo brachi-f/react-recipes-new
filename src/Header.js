@@ -29,14 +29,7 @@ const Header = () => {
                         navigate("/edit");
                     }}>
                 </MenuItem>
-                {/* <MenuItem
-                    name="הוספת קטגוריה"
-                    active={activeItem === "הוספת קטגוריה"}
-                    onClick={({ name }) => {
-                        setActive(name);
-                        navigate('/category');
-                    }}>
-                </MenuItem> */}
+               
                 <MenuItem
                     name="רשימת הקניות"
                     active={activeItem === "רשימת הקניות"}

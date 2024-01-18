@@ -55,6 +55,7 @@ const AllRecipe = () => {
     const categoryList = useSelector(state => state.categories);
     const difficultyList = useSelector(state => state.difficulties);
     return <>
+        {user === null ? navigate('/') : console.log(user)}
         <div className="container">
             <Header textAlign='center' as='h1' /*color="yellow"*/>{recipe.Name}</Header>
             <Card /*color="yellow"*/ className="card-recipe">

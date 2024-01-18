@@ -90,6 +90,7 @@ const FormRecipe = () => {
         navigate('/recipe');
     }
     return <>
+        {user === null ? navigate('/') : console.log(user)}
         <div className="container">
             <Segment placeholder /*color="yellow"*/>
                 <Form onSubmit={handleSubmit(onSubmit)} widths="equal">

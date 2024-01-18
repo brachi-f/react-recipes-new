@@ -21,15 +21,15 @@ const ItemRecipe = ({ recipe }) => {
             <CardContent extra>
                 <span>
                     <Icon name='list' />
-                    {" " + categoryList?.find(c => c.Id === recipe.CategoryId)?.Name + " "}
+                    {categoryList?.find(c => c.Id === recipe.CategoryId)?.Name}
                 </span>
                 <span>
                     <Icon name='signal' />
-                    {" " + difficultyList?.find(d => d.Id === recipe.Difficulty)?.Name + " "}
+                    {difficultyList?.find(d => d.Id === recipe.Difficulty)?.Name}
                 </span>
                 <span>
                     <Icon name='clock' />
-                    {" " + recipe.Duration + " דקות "}
+                    {recipe.Duration + " דקות "}
                 </span>
                 <Button animated onClick={()=>{
                     dispatch({type: actionNames.SET_SELECTED_RECIPE, data: recipe});

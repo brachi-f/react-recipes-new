@@ -33,8 +33,8 @@ const Login = () => {
         let body = { Username: data.UserName, Password: data.Password }
         axios.post(`http://localhost:8080/api/user/login`,body )
             .then((res) => {
-                dispatch({ type: actions.SET_USER, user: res?.data });
-                navigate('/home');
+                dispatch({ type: actions.SET_USER, user: res.data });
+                navigate('/');
             })
             .catch(res => {
                 alert(res.request.response);

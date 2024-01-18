@@ -3,11 +3,13 @@ import { useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Button, Confirm, Icon, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
 import * as actionName from '../store/action'
+import { useNavigate } from "react-router-dom";
 
 const ShoppingList = () => {
     const list = useSelector(state => state.shoppingList);
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [Ok, setOk] = useState(false);
     const [itemToDelete, setItem] = useState();
@@ -21,6 +23,7 @@ const ShoppingList = () => {
             .catch(err => alert("delete product error: ",err.response?.data))
     }
     return < >
+        {user === null ? navigate('/') : console.log(user)}
         <div className="container buy-table">
             <Table celled columns={3} textAlign="center" style={{ width: '50vw' }}>
                 < TableHeader>
@@ -46,6 +49,7 @@ const ShoppingList = () => {
                 </TableBody>
             </Table>
         </div>
+
         <Confirm
             content='למחוק את המוצר מהרשימה?'
             open={open}

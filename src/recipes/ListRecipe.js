@@ -1,9 +1,10 @@
 import ItemRecipe from './ItemRecipe'
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CardGroup, Image, Input, Segment, Select } from "semantic-ui-react";
+import { Button, CardGroup, Checkbox, FormField, Icon, Image, Input, Label, Segment, Select } from "semantic-ui-react";
 import * as actionName from '../store/action'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ListRecipes = () => {
     const dispatch = useDispatch();
@@ -17,56 +18,64 @@ const ListRecipes = () => {
                 alert(err.response?.data);
             });
     }, [])
-    const recipes = useSelector(state => state.recipes)
+    const navigate = useNavigate();
+    const user = useSelector(state => state.user);
+    const recipes = useSelector(state => state.recipes);
     const [categoty, setCategoty] = useState(null);
     const [duration, setDuration] = useState(null);
-    const [userId, setUserId] = useState(null);
+    const [currentUser, setUser] = useState(false);
     const [difficulty, setDifficulty] = useState(null);
     const categoryList = useSelector(state => state.categories);
-    const difficultyList = useSelector(state => state.difficulties)
+    const difficultyList = useSelector(state => state.difficulties);
+
     return <>
+        {user === null ? navigate('/') : null}
         <div className='header-img'>
             <Image
                 src="https://img.freepik.com/premium-photo/set-chocolate-candies-background-sweet-dessert-praline_84485-606.jpg?size=626&ext=jpg&uid=R47685137&ga=GA1.1.745492481.1699734055&semt=ais" />
         </div>
-        <Segment /*color="yellow"*/ inverted className='filters col'>
+        <Segment inverted className='filters col'>
             <Select placeholder='קטגוריה' icon='list' iconposition='left' onChange={(e, { value }) => {
                 setCategoty(value);
             }} options={
                 categoryList.map((c) => { return { key: c.Id, text: c.Name, value: c.Id } })
             } />
-
             <Input
                 icon={{ name: 'clock' }}
                 placeholder='משך זמן מקסימלי'
                 type="number"
                 onChange={(e, { value }) => setDuration(value)}
+                
             />
             <Select placeholder='רמת קושי' icon='signal' iconposition='left' onChange={(e, { value }) => setDifficulty(value)} options={
                 difficultyList.map((c) => { return { key: c.Id, value: c.Id, text: c.Name } })
             } />
-            <Input
-                icon='user'
-                placeholder='קוד בעלים'
-                type="number"
-                onChange={(e, { value }) => setUserId(value)}
-            />
-            {/* </div> */}
+            <Segment size='tiny' className='box'>
+                <Icon name='user' />
+                <Checkbox onChange={() => setUser(!currentUser)}  label='הצג רק את המתכונים שלי' />
+            </Segment>
+            <Button icon labelPosition='left' onClick={() => {
+                setCategoty(null);
+                setDifficulty(null);
+                setDuration(null);
+                setUser(false);
+            }}>
+                <Icon name='undo' />
+                איפוס
+            </Button>
         </Segment>
         <div className="container">
-
             <CardGroup>
                 {recipes.map((r) =>
                     (!categoty || parseInt(categoty) === r.CategoryId) &&
-                        (!userId || parseInt(userId) === r.UserId) &&
+                        (!currentUser || (currentUser && user.Id === r.UserId)) &&
                         (!duration || parseInt(duration) >= parseInt(r.Duration)) &&
                         (!difficulty || r.Difficulty === difficulty) ?
                         <ItemRecipe key={r.Id} recipe={r} /> : <></>)}
             </CardGroup>
-
         </div>
-        {/* </div > */}
-
     </>
 }
 export default ListRecipes;
+
+
