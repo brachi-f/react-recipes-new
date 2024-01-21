@@ -13,7 +13,7 @@ const Ingredient = ({ingredient}) => {
     const user = useSelector(state => state.user)
     const shoppingList = useSelector(state => state.shoppingList);
     return <>
-        <Segment /*color="yellow"*/>
+        <Segment  >
             <SegmentInline>
                 <Button animated='vertical' icon onClick={() => {
                     let i = shoppingList.findIndex(p => p.Name === Name);
@@ -43,21 +43,21 @@ const AllRecipe = () => {
     return <>
         {user === null ? navigate('/home') : null}
         <div className="container">
-            <Header textAlign='center' as='h1' /*color="yellow"*/>{recipe.Name}</Header>
-            <Card /*color="yellow"*/ className="card-recipe">
+            <Header textAlign='center' as='h1'  >{recipe.Name}</Header>
+            <Card   className="card-recipe">
                 <Image src={recipe.Img} wrapped />
 
                 <CardContent extra>
                     <span style={{ margin: 15 }}>
-                        <Icon /*color="yellow"*/ name='list' />
+                        <Icon   name='list' />
                         {" " + categoryList?.find(c => c.Id === recipe.CategoryId)?.Name + " "}
                     </span> 
                     <span style={{ margin: 15 }}>
-                        <Icon /*color="yellow"*/ name='signal' />
+                        <Icon   name='signal' />
                         {" " + difficultyList?.find(d => d.Id === recipe.Difficulty)?.Name + " "}
                     </span>
                     <span style={{ margin: 15 }}>
-                        <Icon /*color="yellow"*/ name='clock' />
+                        <Icon   name='clock' />
                         {" " + recipe.Duration + " דקות "}
                     </span>
                 </CardContent>
@@ -65,14 +65,14 @@ const AllRecipe = () => {
                     <p>{recipe.Description}</p>
                 </CardContent>
                 <CardContent>
-                    <Header /*color="yellow"*/>רכיבים</Header>
+                    <Header  >רכיבים</Header>
                     <SegmentGroup >
                         {recipe.Ingrident?.map((i, index) => <Ingredient key={index} ingredient={i} />)}
                     </SegmentGroup>
-                    <Header /*color="yellow"*/>הוראות הכנה</Header>
+                    <Header  >הוראות הכנה</Header>
                     <SegmentGroup>
                         {recipe.Instructions?.map((i, index) =>
-                            <Segment /*color="yellow"*/ key={index}>
+                            <Segment   key={index}>
                                 <Icon name="circle" size="tiny" style={{ margin: 15 }} />
                                 {i.Instruc ? i.Instruc : i}
                             </Segment>)}
@@ -81,7 +81,7 @@ const AllRecipe = () => {
                 {user.Id === recipe.UserId ?
                     <CardFooter>
                         {/* IMPORTANT!!!!!!!!!!!! */}
-                        <Button /*color="yellow"*/ icon size='large' floated="left" onClick={() => {
+                        <Button   icon size='large' floated="left" onClick={() => {
                             deleteRecipe(recipe.Id).then(res=>{
                                 dispatch({ type: actionName.DELETE_RECIPE, recipeId: recipe.Id })
                                 Swal.fire({icon: 'success', title: 'המתכון נמחק בהצלחה'})
@@ -92,7 +92,7 @@ const AllRecipe = () => {
                         }}>
                             <Icon name='trash alternate' />
                         </Button>
-                        <Button /*color="yellow"*/ icon size='large' floated="left" onClick={() => navigate('/edit')}>
+                        <Button   icon size='large' floated="left" onClick={() => navigate('/edit')}>
                             <Icon name='edit' />
                         </Button>
                     </CardFooter>

@@ -12,7 +12,7 @@ import { ModalContent, ModalActions, Button, Header, Icon, Modal, Form, FormFiel
 import { InputRef } from "../user/Login";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import * as category from '../services/categories'
 
 const Categories = () => {
     const dispatch = useDispatch();
@@ -25,13 +25,14 @@ const Categories = () => {
     const [err, setErr] = useState(false);
     const [errData, setErrData] = useState("");
     const onSubmit = (data) => {
-        axios.post(`http://localhost:8080/api/category`, { Name: data.Name })
+        category.addCategory(data.Name) 
             .then(c => {
                 dispatch({ type: actionsName.ADD_CATEGORY, data: c.data });
                 setOpen(false);
                 Swal.fire({
                     icon: 'success',
                     showConfirmButton: false,
+                    title: 'קטגוריה הוספה בהצלחה',
                     timer: '1500'
                 })
             }).catch(err => {
@@ -43,7 +44,7 @@ const Categories = () => {
     return <>
         <Modal
             open={open}
-            trigger={<Button /*color="yellow"*/onClick={()=>setOpen(true)} >הוספת קטגוריה</Button>}
+            trigger={<Button onClick={()=>setOpen(true)} >הוספת קטגוריה</Button>}
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             size="small"

@@ -29,7 +29,7 @@ const Header = () => {
                         navigate("/edit");
                     }}>
                 </MenuItem>
-               
+
                 <MenuItem
                     name="רשימת הקניות"
                     active={activeItem === "רשימת הקניות"}
@@ -40,7 +40,11 @@ const Header = () => {
                 </MenuItem>
             </MenuMenu>
             <MenuItem
-            
+            position="left"
+                name={"Hello " + user.Name}
+                textAlign="center" />
+            <MenuItem
+            position="left"
                 name='התנתקות'
                 active={activeItem === 'התנתקות'}
                 onClick={({ name }) => {
@@ -49,8 +53,8 @@ const Header = () => {
                     navigate('/home');
                 }}
             />
+            
         </Menu>
-            <Segment inverted /*color="yellow"*/ textAlign="center" content={"Hello " + user.Name}></Segment>
         </> :
             <Menu inverted stackable>
                 <MenuMenu position='right'>
@@ -76,3 +80,6 @@ const Header = () => {
     </>
 }
 export default Header;
+
+
+// {/* <Segment inverted  textAlign = "center" content={ "Hello " + user.Name } ></Segment > * /}

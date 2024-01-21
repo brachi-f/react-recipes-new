@@ -7,13 +7,15 @@ export const getProductsDispatch = (userId) => {
         axios.get(`http://localhost:8080/api/bay/${userId}`)
             .then(x => dispatch({ type: actionName.SET_PRODUCTS, data: x.data }))
             .catch(err=> Swal.fire({
-                title: err.response.data,
+                 title: err.response.data,
                 icon: 'error'
             }))
     }
 } 
 
-export const addProuduct = (product)=>{
+export const getProducts = (userId)=>axios.get(`http://localhost:8080/api/bay/${userId}`);
+
+export const addProuductDispatch = (product)=>{
     return dispatch =>{
         axios.post(`http://localhost:8080/api/bay`, product)
         .then(res => {
@@ -33,6 +35,8 @@ export const addProuduct = (product)=>{
     }
 }
 
+export const addProuduct = (product)=> axios.post(`http://localhost:8080/api/bay`,product);
+
 export const updateProduct = (product,i)=>{
     return dispatch=>{
         axios.post(`http://localhost:8080/api/bay`, product)
@@ -49,7 +53,10 @@ export const updateProduct = (product,i)=>{
         .catch(err => console.log("add product error: ", err.response));
     }
 }
-export const deleteProduct = (productId)=>{
+
+export const deleteProduct =(productId) => axios.post(`http://localhost:8080/api/bay/delete/${productId}`);
+
+export const deleteProductDispatch = (productId)=>{
     return dispatch=>{
         axios.post(`http://localhost:8080/api/bay/delete/${productId}`)
         .then(res => {

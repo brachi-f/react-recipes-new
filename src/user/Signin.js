@@ -1,4 +1,4 @@
-import { Form, div, FormInput, Segment, Step, Button, Message } from "semantic-ui-react";
+import { Form, Segment, Button, Message } from "semantic-ui-react";
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -40,7 +40,7 @@ const Signin = () => {
     }
     return <>
         <div className="container">
-            <Segment placeholder /*className="my-segment"*/ >
+            <Segment placeholder style={{width: '70%', margin: 'auto'}} >
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Form.Field>
                         <label>שם משתמש</label>

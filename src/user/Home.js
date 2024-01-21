@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Container, Header, HeaderContent, Icon, Item, ItemContent, ItemHeader, ListContent, Message } from "semantic-ui-react";
+import { Header, Message } from "semantic-ui-react";
 import * as actionName from '../store/action'
 
 const Home = () => {
     const user = useSelector(s => s.user);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({ type: actionName.SET_SELECTED_RECIPE, data: null });

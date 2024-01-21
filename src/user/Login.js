@@ -42,8 +42,8 @@ const Login = () => {
     };
 
     return (
-        <>
-            <Segment placeholder>
+        <div className='container'>
+            <Segment placeholder style={{width: '70%', margin: 'auto'}}>
                 <Grid columns={2} relaxed="very" stackable>
                     <Grid.Column>
                         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -75,7 +75,7 @@ const Login = () => {
             ) : (
                 <></>
             )}
-        </>
+        </div>
     );
 };
 

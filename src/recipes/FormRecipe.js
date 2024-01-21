@@ -18,7 +18,7 @@ const FormRecipe = () => {
     const recipe = useSelector(state => state.selectedRecipe);
     const categoryList = useSelector(state => state.categories);
     const difficultyList = useSelector(state => state.difficulties)
-
+    const [err, setErr] = useState(false);
     const schema = yup.object({
         CategoryId: yup.number().integer().required().min(1, "חובה לבחור קטגוריה"),
         Name: yup.string().required("חובה להכניס שם"),
@@ -53,7 +53,7 @@ const FormRecipe = () => {
         name: "Ingrident",
     });
     useEffect(() => {
-        recipe?.Ingrident?.map((ing) => IngridentAppend(ing))
+        recipe?.Ingrident?.map((ing) => { IngridentAppend(ing) })
         recipe?.Instructions?.map((ins) => {
             InstructionsAppend(ins)
         })
@@ -61,37 +61,39 @@ const FormRecipe = () => {
     const user = useSelector(state => state.user)
     const navigate = useNavigate();
     const onSubmit = (data) => {
+        setErr(false);
         let recipeToSend = {
-            Id: recipe?.Id,
             Name: data.Name, UserId: user.Id, CategoryId: data.CategoryId, Img: data.Img, Duration: data.Duration, Difficulty: data.Difficulty, Description: data.Description,
             Ingrident: data.Ingrident, Instructions: data.Instructions
         }
-        if (recipe) {
+        console.log("recipe to send: ", recipeToSend)
+        if (!recipe) {
             recipes.addRecipe(recipeToSend).then(res => {
                 dispatch({ type: actionName.ADD_RECIPE, data: res.data });
-                Swal.fire({ icon: 'success', position: 'top-left', title: 'המתכון הוסף בהצלחה' })
+                Swal.fire({ icon: 'success', title: 'המתכון נוסף בהצלחה', timer: 1500, showConfirmButton: false })
                 navigate('/recipe');
-            }).catch(err => Swal.fire({ icon: 'error', position: 'top-left', title: err.response?.data }))
+            }).catch(err => Swal.fire({ icon: 'error', title: err.response?.data }))
         }
         else {
-            recipes.updateRecipe(recipeToSend).then(res => {
+            recipes.updateRecipe({ ...recipeToSend, Id: recipe.Id }).then(res => {
                 dispatch({ type: actionName.UPDATE_RECIPE, data: res.data });
-                Swal.fire({ icon: 'success', position: 'top-left', title: 'המתכון עודכן בהצלחה' })
+                Swal.fire({ icon: 'success', title: 'המתכון עודכן בהצלחה', timer: 1500, showConfirmButton: false })
                 navigate('/recipe');
             }).catch(err => Swal.fire({ icon: 'error', position: 'top-left', title: err.response?.data }))
             dispatch({ type: actionName.SET_SELECTED_RECIPE, data: null })
         }
     }
     return <>
-        {user === null ? navigate('/home'): null}
+        {user === null ? navigate('/home') : null}
         <div className="container">
             <Segment placeholder >
                 <Form onSubmit={handleSubmit(onSubmit)} widths="equal">
                     <Form.Field >
                         <label>שם מתכון</label>
                         <InputRef {...register("Name")} defaultValue={recipe?.Name} />
+                    <Message warning content={errors.Name?.message} />
                     </Form.Field>
-                    {errors.Name?.message ? <Message warning content={errors.Name.message} /> : <></>}
+                    {console.log("name err: ", errors.Name?.message)}
                     <Form.Field>
                         <label>קטגוריה</label>
                         <select {...register("CategoryId")} name="CategoryId" defaultValue={recipe ? recipe.CategoryId : 0}>
@@ -100,7 +102,7 @@ const FormRecipe = () => {
                                 <option key={category.Id} value={category.Id}>{category.Name}</option>
                             )}
                         </select>
-                        {errors.CategoryId?.message ? <Message warning content={errors.CategoryId.message} /> : <></>}
+                        {errors.CategoryId ? <Message warning content={errors.CategoryId.message} /> : <></>}
                     </Form.Field>
                     <Categories />
                     <Form.Field>
@@ -110,23 +112,23 @@ const FormRecipe = () => {
                             {difficultyList.map((difficulty) => <>
                                 <option key={difficulty.Id} value={difficulty.Id}>{difficulty.Name}</option></>)}
                         </select>
-                        {errors.Difficulty?.message ? <Message warning content={errors.Difficulty.message} /> : <></>}
+                        {errors.Difficulty ? <Message warning content={errors.Difficulty.message} /> : <></>}
                     </Form.Field>
                     <Form.Field>
                         <label>קישור לתמונה</label>
                         <InputRef {...register("Img")} defaultValue={recipe?.Img} />
                     </Form.Field>
-                    {errors.Img?.message ? <Message warning content={errors.Img.message} /> : <></>}
+                    {errors.Img ? <Message warning content={errors.Img.message} /> : <></>}
                     <Form.Field>
                         <label>תיאור</label>
                         <InputRef {...register("Description")} defaultValue={recipe?.Description} />
                     </Form.Field>
-                    {errors.Description?.message ? <Message warning content={errors.Description.message} /> : <></>}
+                    {errors.Description ? <Message warning content={errors.Description.message} /> : <></>}
                     <Form.Field>
                         <label>זמן הכנה בדקות</label>
                         <InputRef {...register("Duration")} defaultValue={recipe?.Duration} />
                     </Form.Field>
-                    {errors.Duration?.message ? <Message warning content={errors.Duration.message} /> : <></>}
+                    {errors.Duration ? <Message warning content={errors.Duration.message} /> : <></>}
 
                     <h4>רכיבים</h4>
                     {IngridentFields?.map((ingrident, index) =>
@@ -134,6 +136,7 @@ const FormRecipe = () => {
                             <Form.Field>
                                 <label>מוצר</label>
                                 <InputRef {...register(`Ingrident.${index}.Name`)} defaultValue={ingrident?.Name} placeholder="שם מוצר" />
+                                {console.log("product", errors[`Ingrident.${index}.Name`])}
                                 <p>{errors[`Ingrident.${index}.Name`]?.message}</p>
                             </Form.Field>
                             <Form.Field>
@@ -147,11 +150,11 @@ const FormRecipe = () => {
                                 <p>{errors[`Ingrident.${index}.Type`]?.message}</p>
                             </Form.Field>
                             <Button icon size='large' floated="left" onClick={() => IngridentRemove(index)}>
-                                <Icon /*color="yellow"*/ name='trash alternate' />
+                                <Icon name='trash alternate' />
                             </Button>
                         </FormGroup>
                     )}
-                    <Button /*color="yellow"*/ onClick={() => { IngridentAppend({ Name: null, Count: null, Type: null }) }}>
+                    <Button onClick={() => { IngridentAppend({ Name: null, Count: null, Type: null }) }}>
                         <Icon name="plus" style={{ margin: 10 }} /> הוסף מוצר</Button>
                     <h4>הוראות הכנה</h4>
                     {InstructionsFields?.map((instruction, index) =>
@@ -163,14 +166,14 @@ const FormRecipe = () => {
                             </Form.Field>
 
                             <Button icon size='large' floated="left" onClick={() => InstructionsRemove(index)}>
-                                <Icon /*color="yellow"*/ name='trash alternate' />
+                                <Icon name='trash alternate' />
                             </Button>
                         </FormGroup>
                     )}
-                    <Button /*color="yellow"*/ onClick={() => InstructionsAppend(null)}>
+                    <Button onClick={() => InstructionsAppend(null)}>
                         <Icon name="plus" style={{ margin: 10 }} /> הוסף הוראה</Button>
                     <br />
-                    <Button size="medium" type='submit' /*color="yellow"*/ floated="left" >
+                    <Button size="medium" type='submit' floated="left" onClick={() => setErr(true)}>
                         <Icon name='save' style={{ margin: 10 }} />שמירה
                     </Button>
                 </Form>

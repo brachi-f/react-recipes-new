@@ -37,17 +37,17 @@ const reducer = (state = intialState, action) => {
             {
                 let list = state.shoppingList;
                 list[action.index] = action.data;
-                list.filter(p=>p)
+                list.filter(p => p)
                 return { ...state, shoppingList: list }
             }
         case actionsName.DELETE_PRODUCT:
             {
-                let list =[];
+                let list = [];
                 list = state.shoppingList;
                 list = list.filter(s => s.Id !== action.id);
                 return { ...state, shoppingList: list }
             }
-        case actionsName.DELETE_RECIPE: 
+        case actionsName.DELETE_RECIPE:
             {
                 let recipes = state.recipes.filter(r => r != action.data);
                 return { ...state, recipes }
@@ -63,13 +63,19 @@ const reducer = (state = intialState, action) => {
         case actionsName.UPDATE_RECIPE:
             {
                 let recipes = state.recipes;
-                let i = recipes.findIndex(r=>r.Id===action.data.Id)
-                recipes[i]=action.data;
-                return { ...state,recipes }
+                let i = recipes.findIndex(r => r.Id === action.data.Id)
+                recipes[i] = action.data;
+                return { ...state, recipes }
             }
         case actionsName.SET_SELECTED_RECIPE:
             {
                 return { ...state, selectedRecipe: action.data }
+            }
+        case actionsName.ADD_CATEGORY:
+            {
+                let categories = state.categories;
+                categories.push(action.data)
+                return { ...state, categories }
             }
         default:
             {
