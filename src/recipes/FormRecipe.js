@@ -9,10 +9,13 @@ import axios from "axios";
 import * as actionName from '../store/action'
 import { useNavigate } from "react-router-dom";
 import Categories from '../categories/Categories'
+import * as recipes from '../services/recipes'
+import { type } from "@testing-library/user-event/dist/type";
+import Swal from "sweetalert2";
 
 const FormRecipe = () => {
     const dispatch = useDispatch();
-    const [recipe, setRecipe] = useState(useSelector(state => state.selectedRecipe));
+    const recipe = useSelector(state => state.selectedRecipe);
     const categoryList = useSelector(state => state.categories);
     const difficultyList = useSelector(state => state.difficulties)
 
@@ -55,37 +58,34 @@ const FormRecipe = () => {
             InstructionsAppend(ins)
         })
     }, [recipe]);
-
-
     const user = useSelector(state => state.user)
     const navigate = useNavigate();
     const onSubmit = (data) => {
-        //alert(JSON.stringify(data))
         let recipeToSend = {
             Id: recipe?.Id,
             Name: data.Name, UserId: user.Id, CategoryId: data.CategoryId, Img: data.Img, Duration: data.Duration, Difficulty: data.Difficulty, Description: data.Description,
             Ingrident: data.Ingrident, Instructions: data.Instructions
         }
-        let responseRecipe;
         if (recipe) {
-            axios.post(`http://localhost:8080/api/recipe/edit`, recipeToSend)
-                .then(res => responseRecipe = res)
-                .catch(err => alert(err.response.data));
+            recipes.addRecipe(recipeToSend).then(res => {
+                dispatch({ type: actionName.ADD_RECIPE, data: res.data });
+                Swal.fire({ icon: 'success', position: 'top-left', title: 'המתכון הוסף בהצלחה' })
+                navigate('/recipe');
+            }).catch(err => Swal.fire({ icon: 'error', position: 'top-left', title: err.response?.data }))
         }
         else {
-            axios.post(`http://localhost:8080/api/recipe`, recipeToSend)
-                .then(res => {
-                    responseRecipe = res.data;
-                    dispatch({ type: actionName.ADD_RECIPE, data: responseRecipe });
-                })
-                .catch(err => alert(err.response.data));
+            recipes.updateRecipe(recipeToSend).then(res => {
+                dispatch({ type: actionName.UPDATE_RECIPE, data: res.data });
+                Swal.fire({ icon: 'success', position: 'top-left', title: 'המתכון עודכן בהצלחה' })
+                navigate('/recipe');
+            }).catch(err => Swal.fire({ icon: 'error', position: 'top-left', title: err.response?.data }))
+            dispatch({ type: actionName.SET_SELECTED_RECIPE, data: null })
         }
-        navigate('/recipe');
     }
     return <>
-        {user === null ? navigate('/home') : null}
+        {user === null ? navigate('/home'): null}
         <div className="container">
-            <Segment placeholder /*color="yellow"*/>
+            <Segment placeholder >
                 <Form onSubmit={handleSubmit(onSubmit)} widths="equal">
                     <Form.Field >
                         <label>שם מתכון</label>
@@ -151,7 +151,7 @@ const FormRecipe = () => {
                             </Button>
                         </FormGroup>
                     )}
-                    <Button /*color="yellow"*/ onClick={() => IngridentAppend({ Name: null, Count: null, Type: null })}>
+                    <Button /*color="yellow"*/ onClick={() => { IngridentAppend({ Name: null, Count: null, Type: null }) }}>
                         <Icon name="plus" style={{ margin: 10 }} /> הוסף מוצר</Button>
                     <h4>הוראות הכנה</h4>
                     {InstructionsFields?.map((instruction, index) =>
@@ -168,7 +168,7 @@ const FormRecipe = () => {
                         </FormGroup>
                     )}
                     <Button /*color="yellow"*/ onClick={() => InstructionsAppend(null)}>
-                        <Icon  name="plus" style={{ margin: 10 }} /> הוסף הוראה</Button>
+                        <Icon name="plus" style={{ margin: 10 }} /> הוסף הוראה</Button>
                     <br />
                     <Button size="medium" type='submit' /*color="yellow"*/ floated="left" >
                         <Icon name='save' style={{ margin: 10 }} />שמירה
@@ -177,6 +177,7 @@ const FormRecipe = () => {
             </Segment>
         </div>
     </>
+
 
 }
 export default FormRecipe;

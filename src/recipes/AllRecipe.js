@@ -5,6 +5,8 @@ import { CardFooter } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import * as products from '../services/shoppingList'
+import { deleteRecipe } from "../services/recipes";
+import Swal from "sweetalert2";
 const Ingredient = ({ingredient}) => {
     const { Name, Count, Type } = ingredient;
     const dispatch = useDispatch();
@@ -80,8 +82,13 @@ const AllRecipe = () => {
                     <CardFooter>
                         {/* IMPORTANT!!!!!!!!!!!! */}
                         <Button /*color="yellow"*/ icon size='large' floated="left" onClick={() => {
-                            dispatch({ type: actionName.DELETE_RECIPE, recipeId: recipe.Id })
-                            navigate('/recipe')
+                            deleteRecipe(recipe.Id).then(res=>{
+                                dispatch({ type: actionName.DELETE_RECIPE, recipeId: recipe.Id })
+                                Swal.fire({icon: 'success', title: 'המתכון נמחק בהצלחה'})
+                                navigate('/recipe')
+                            }).catch(err=>{
+                                Swal.fire({icon: 'error', title: err.response?.data})
+                            })
                         }}>
                             <Icon name='trash alternate' />
                         </Button>
@@ -91,7 +98,7 @@ const AllRecipe = () => {
                     </CardFooter>
                     : <></>}
             </Card>
-        </div>
+        </div> 
     </>
 }
 export default AllRecipe;

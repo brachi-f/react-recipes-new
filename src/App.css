@@ -71,7 +71,7 @@
     flex-direction: column;
 }
 .small.modal {
-  height: 40vh;
+  height: fit-content;
   position: absolute;
   top: 30vh;
   width: 60vw !important;

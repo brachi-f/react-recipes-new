@@ -17,11 +17,7 @@ code {
   justify-content: space-evenly;
 }
 
-body {
-  /* background-image: url(https://img.freepik.com/premium-photo/table-full-different-desserts-including-muffins-other-pastries_777078-11641.jpg?w=826) !important; */
-  /* background-size: cover !important; */
-  /* background-color: black !important; */
-}
+
 
 .ui.cards {
   justify-content: center;
@@ -53,4 +49,10 @@ body {
 }
 .box{
   margin: 0px !important;
+}
+.homePage{
+  display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
 }

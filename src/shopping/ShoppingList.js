@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, CardHeader, Form, FormField, Header, Icon, Message, Modal, ModalActions, ModalContent, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
+import { Button, Form, FormField, Header, Icon, Message, Modal, ModalActions, ModalContent, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 import * as products from '../services/shoppingList'
 import Swal from "sweetalert2";
@@ -31,21 +31,20 @@ const ShoppingList = () => {
             dispatch(products.updateProduct({ Name: data.Name, Count: data.Count, UserId: user.Id }, i))
             : dispatch(products.addProuduct({ Name: data.Name, Count: data.Count, UserId: user.Id }));
         setOpen(false);
-        console.log("open? ",open?"true":"false")
     }
-    // const updateProduct = (p, c) => {
-    //     dispatch(products.updateProduct({ Name: p.Name, Count: c, UserId: p.UserId }, list.findIndex(l => l.Id === p.Id)))
-    // }
+    const updateProduct = (p, c) => {
+        dispatch(products.updateProduct({ Name: p.Name, Count: c, UserId: p.UserId }, list.findIndex(l => l.Id === p.Id)))
+    }
     return < >
         {user === null ? navigate('/home') : null}
         <div className="container buy-table">
             <Button onClick={() => { setOpen(true) }}>
                 <Icon name="plus" style={{ margin: 10 }} /> הוסף מוצר</Button>
-            <Table celled columns={3} textAlign="center" style={{ width: '50vw' }}>
+            <Table celled={false} columns={3} textAlign="center" style={{ width: '50vw' }}>
                 < TableHeader>
                     <TableHeaderCell>מוצר</TableHeaderCell>
                     <TableHeaderCell>כמות</TableHeaderCell>
-                    <TableHeaderCell>   </TableHeaderCell>
+                    <TableHeaderCell>{"   "}</TableHeaderCell>
                 </TableHeader>
                 <TableBody>
                     {list.map((p) =>
@@ -54,7 +53,6 @@ const ShoppingList = () => {
                             <TableCell>{p.Count}</TableCell>
                             <TableCell>
                                 <Button icon onClick={() => {
-                                    // setItem(p);
                                     Swal.fire({
                                         title: "אתה בטוח?",
                                         icon: "warning",
@@ -70,7 +68,7 @@ const ShoppingList = () => {
                                 }}>
                                     <Icon name="trash alternate" />
                                 </Button>
-                                {/* <Button icon onClick={() => {
+                                <Button icon onClick={() => {
                                     // dispatch(products.updateProduct({ Name: p.Name, Count: 1, UserId: p.UserId }, list.findIndex(l => l.Id === p.Id)))
                                     updateProduct(p, 1);
                                 }}>
@@ -81,14 +79,13 @@ const ShoppingList = () => {
                                     updateProduct(p, -1);
                                 }}>
                                     <Icon name="minus" />
-                                </Button> */}
+                                </Button>
                             </TableCell>
                         </TableRow>)}
                 </TableBody>
             </Table>
             <Modal
                 open={open}
-                
                 size="small"
             >
                 <Header content='הוספת מוצר' />
