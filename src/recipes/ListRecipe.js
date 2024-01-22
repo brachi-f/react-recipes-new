@@ -22,10 +22,6 @@ const ListRecipes = () => {
     const categoryList = useSelector(state => state.categories);
     const difficultyList = useSelector(state => state.difficulties);
 
-    // const categoryRef = createRef();
-    // const durationRef = createRef();
-    // const difficultyRef = createRef();
-    // const userRef = createRef();
     const [state, setState] = useState({});
 
     return <>

@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Grid, Segment, Form, Button, Divider, Message } from 'semantic-ui-react';
 import { useForm } from 'react-hook-form';
@@ -9,6 +7,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import * as actions from '../store/action';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export const InputRef = React.forwardRef(({ ...rest }, ref) => (
     <input
@@ -31,19 +30,19 @@ const Login = () => {
 
     const onSubmit = (data) => {
         let body = { Username: data.UserName, Password: data.Password }
-        axios.post(`http://localhost:8080/api/user/login`,body )
+        axios.post(`http://localhost:8080/api/user/login`, body)
             .then((res) => {
                 dispatch({ type: actions.SET_USER, user: res.data });
                 navigate('/home');
             })
             .catch(res => {
-                alert(res.request.response);
+                Swal.fire({ icon: 'error', timer: 2000, showConfirmButton: false, title: res.request.response })
             });
     };
 
     return (
         <div className='container'>
-            <Segment placeholder style={{width: '70%', margin: 'auto'}}>
+            <Segment placeholder style={{ width: '70%', margin: 'auto' }}>
                 <Grid columns={2} relaxed="very" stackable>
                     <Grid.Column>
                         <Form onSubmit={handleSubmit(onSubmit)}>

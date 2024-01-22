@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { InputRef } from "./Login";
 import axios from "axios";
 import * as actions from '../store/action';
+import Swal from "sweetalert2";
 
 
 const Signin = () => {
@@ -29,18 +30,18 @@ const Signin = () => {
             resolver: yupResolver(schema),
         })
     const onSubmit = (data) => {
-        axios.post(`http://localhost:8080/api/user/sighin`, { Username:data.UserName, Password:data.Password, Name: data.Name, Phone: data.Phone, Email: data.Email, Tz: data.Tz })
+        axios.post(`http://localhost:8080/api/user/sighin`, { Username: data.UserName, Password: data.Password, Name: data.Name, Phone: data.Phone, Email: data.Email, Tz: data.Tz })
             .then((res) => {
                 dispatch({ type: actions.SET_USER, user: res?.data });
                 navigate('/home');
             })
             .catch((res) => {
-                alert(res.request.response);
+                Swal.fire({ icon: 'error', showConfirmButton: false, timer: 2000, title: res.request.response })
             });
     }
     return <>
         <div className="container">
-            <Segment placeholder style={{width: '70%', margin: 'auto'}} >
+            <Segment placeholder style={{ width: '70%', margin: 'auto' }} >
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Form.Field>
                         <label>שם משתמש</label>

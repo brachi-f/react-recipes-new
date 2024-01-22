@@ -1,16 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Form, FormGroup, Icon, Message, Segment } from "semantic-ui-react";
+import { Button, Form, FormGroup, Icon, Item, Message, Segment } from "semantic-ui-react";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm, useFieldArray } from "react-hook-form"
 import { useEffect, useState } from "react"
 import { InputRef } from "../user/Login";
-import axios from "axios";
 import * as actionName from '../store/action'
 import { useNavigate } from "react-router-dom";
 import Categories from '../categories/Categories'
 import * as recipes from '../services/recipes'
-import { type } from "@testing-library/user-event/dist/type";
 import Swal from "sweetalert2";
 
 const FormRecipe = () => {
@@ -66,7 +64,6 @@ const FormRecipe = () => {
             Name: data.Name, UserId: user.Id, CategoryId: data.CategoryId, Img: data.Img, Duration: data.Duration, Difficulty: data.Difficulty, Description: data.Description,
             Ingrident: data.Ingrident, Instructions: data.Instructions
         }
-        console.log("recipe to send: ", recipeToSend)
         if (!recipe) {
             recipes.addRecipe(recipeToSend).then(res => {
                 dispatch({ type: actionName.ADD_RECIPE, data: res.data });
@@ -91,9 +88,10 @@ const FormRecipe = () => {
                     <Form.Field >
                         <label>שם מתכון</label>
                         <InputRef {...register("Name")} defaultValue={recipe?.Name} />
-                    <Message warning content={errors.Name?.message} />
                     </Form.Field>
-                    {console.log("name err: ", errors.Name?.message)}
+                    <Item>
+                        <Message warning content={errors.Name?.message} />
+                    </Item>
                     <Form.Field>
                         <label>קטגוריה</label>
                         <select {...register("CategoryId")} name="CategoryId" defaultValue={recipe ? recipe.CategoryId : 0}>
@@ -136,7 +134,6 @@ const FormRecipe = () => {
                             <Form.Field>
                                 <label>מוצר</label>
                                 <InputRef {...register(`Ingrident.${index}.Name`)} defaultValue={ingrident?.Name} placeholder="שם מוצר" />
-                                {console.log("product", errors[`Ingrident.${index}.Name`])}
                                 <p>{errors[`Ingrident.${index}.Name`]?.message}</p>
                             </Form.Field>
                             <Form.Field>

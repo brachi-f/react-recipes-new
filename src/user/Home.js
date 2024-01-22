@@ -13,12 +13,12 @@ const Home = () => {
     return <>
         <div className="container homePage">
             <div>
-                < Header style={{ fontSize: '5em' }} textAlign="center" content={text} />
+                <Header style={{ fontSize: '5em' }} textAlign="center" content={text} />
                 <Header as='h1' textAlign="center" content='למקצוענים במזון' />
                 <Header as='h3' textAlign="center" content='מתכונים מנצחים. מפה תוכלו לנווט לכל סוג מתכון שתחפצו. סלטים, ממולאים, תבשילים, מרקים, מתכונים טבעוניים, צמחוניים, קינוחים ועוד. מיטב השפים בישראל ממתינים לכם עם אוסף של מתכונים מדוייקים ומוצלחים שיהפכו אתכם לבשלנים מצטיינים.' />
                 {user === null ?
                     <Message floating error header='אינך מחובר למערכת' content='הצפיה במתכונים הינה למשתמשים רשומים בלבד' /> :
-                    <Header as='a' content='לצפיה במתכונים' textAlign="center" />
+                    <></>
                 }
 
             </div>

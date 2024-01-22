@@ -50,7 +50,7 @@ export const updateProduct = (product,i)=>{
                     timer: 2000
                 })
         })
-        .catch(err => console.log("add product error: ", err.response));
+        .catch(err => Swal.fire({icon: 'error', showConfirmButton: false, title: err.response?.data, timer:1500}));
     }
 }
 
@@ -68,6 +68,6 @@ export const deleteProductDispatch = (productId)=>{
                 timer: 2000
             })
         })
-        .catch(err => alert("delete product error: ",err.response?.data))
+        .catch(err => Swal.fire({icon: 'error', showConfirmButton: false, title: err.response?.data, timer:1500}));
     }
 }

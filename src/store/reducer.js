@@ -1,7 +1,4 @@
-import axios from 'axios';
 import * as actionsName from './action';
-import { act } from 'react-dom/test-utils';
-import { getProducts } from '../services/shoppingList';
 const intialState = {
     recipes: [],
     categories: [],
