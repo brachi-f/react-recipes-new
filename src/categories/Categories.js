@@ -3,13 +3,11 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import * as actionsName from '../store/action';
 import { useState } from "react";
 import React from 'react'
 import { ModalContent, ModalActions, Button, Header, Icon, Modal, Form, FormField, Message } from 'semantic-ui-react'
 import { InputRef } from "../user/Login";
-import axios from "axios";
 import Swal from "sweetalert2";
 import * as category from '../services/categories'
 
@@ -36,6 +34,7 @@ const Categories = () => {
                 })
             }).catch(err => {
                 setErrData(err.response?.data)
+                console.log(err);
                 setErr(true);
             })
     } 

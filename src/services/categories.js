@@ -17,5 +17,5 @@ export const getCategoriesDispatch = () => {
 }
 
 export const addCategory = (Name) => {
-    return axios.post('http://localhost:8080/api/categoty',{Name: Name});
+    return axios.post('http://localhost:8080/api/category',{Name: Name});
 }

@@ -18,8 +18,8 @@ const Ingredient = ({ingredient}) => {
                 <Button animated='vertical' icon onClick={() => {
                     let i = shoppingList.findIndex(p => p.Name === Name);
                     i >= 0 ?
-                    dispatch(products.updateProduct({ Name: Name, Count: 1, UserId: user.Id },i))
-                    : dispatch(products.addProuduct({ Name: Name, Count: 1, UserId: user.Id }));
+                    dispatch(products.updateProductDispatch({ Name: Name, Count: 1, UserId: user.Id },i))
+                    : dispatch(products.addProuductDispatch({ Name: Name, Count: 1, UserId: user.Id }));
                 }}>
                     <ButtonContent visible>
                         <Icon name="plus" />

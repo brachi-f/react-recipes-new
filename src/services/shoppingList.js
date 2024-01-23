@@ -6,10 +6,7 @@ export const getProductsDispatch = (userId) => {
     return dispatch => {
         axios.get(`http://localhost:8080/api/bay/${userId}`)
             .then(x => dispatch({ type: actionName.SET_PRODUCTS, data: x.data }))
-            .catch(err=> Swal.fire({
-                 title: err.response.data,
-                icon: 'error'
-            }))
+            .catch(err=>console.log(err.response?.data));
     }
 } 
 
@@ -37,7 +34,7 @@ export const addProuductDispatch = (product)=>{
 
 export const addProuduct = (product)=> axios.post(`http://localhost:8080/api/bay`,product);
 
-export const updateProduct = (product,i)=>{
+export const updateProductDispatch = (product,i)=>{
     return dispatch=>{
         axios.post(`http://localhost:8080/api/bay`, product)
         .then(res => {

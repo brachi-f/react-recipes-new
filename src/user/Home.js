@@ -11,11 +11,12 @@ const Home = () => {
     }, [])
     let text = user ? "Wellcome " + user.Name : "ברוך הבא";
     return <>
+    < img className="imgHome" src="https://as1.ftcdn.net/v2/jpg/02/52/38/80/1000_F_252388016_KjPnB9vglSCuUJAumCDNbmMzGdzPAucK.jpg"/>
         <div className="container homePage">
-            <div>
-                <Header style={{ fontSize: '5em' }} textAlign="center" content={text} />
-                <Header as='h1' textAlign="center" content='למקצוענים במזון' />
-                <Header as='h3' textAlign="center" content='מתכונים מנצחים. מפה תוכלו לנווט לכל סוג מתכון שתחפצו. סלטים, ממולאים, תבשילים, מרקים, מתכונים טבעוניים, צמחוניים, קינוחים ועוד. מיטב השפים בישראל ממתינים לכם עם אוסף של מתכונים מדוייקים ומוצלחים שיהפכו אתכם לבשלנים מצטיינים.' />
+            <div style={{backgroundColor: '#00000073', padding: '10%'}}>
+                <Header style={{ fontSize: '5em' }} inverted textAlign="center" content={text} />
+                <Header as='h1' textAlign="center" inverted content='למקצוענים במזון' />
+                <Header as='h2' textAlign="center" inverted content='מתכונים מנצחים. מפה תוכלו לנווט לכל סוג מתכון שתחפצו. סלטים, ממולאים, תבשילים, מרקים, מתכונים טבעוניים, צמחוניים, קינוחים ועוד. מיטב השפים בישראל ממתינים לכם עם אוסף של מתכונים מדוייקים ומוצלחים שיהפכו אתכם לבשלנים מצטיינים.' />
                 {user === null ?
                     <Message floating error header='אינך מחובר למערכת' content='הצפיה במתכונים הינה למשתמשים רשומים בלבד' /> :
                     <></>

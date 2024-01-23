@@ -56,3 +56,8 @@ code {
     align-items: center;
     height: 100vh;
 }
+.imgHome{
+  height: 100vh;
+  position: absolute;
+  z-index: -1;
+}

@@ -27,7 +27,7 @@ const ShoppingList = () => {
     const [temp, refresh] = useState(true);
 
     const deleteItem = (itemToDelete) => {
-        dispatch(products.deleteProduct(itemToDelete.Id));
+        dispatch(products.deleteProductDispatch(itemToDelete.Id));
     }
 
     const onSubmit = (data) => {
